@@ -1,0 +1,5 @@
+1Bonjour comment ca va
+2ce fichier est un test
+3il sert de test pour get next line
+4jecrit vraiment nimporte quoi 
+5juste pour tester la lecture de fichier
