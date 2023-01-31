@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 11:19:49 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/01/30 17:07:05 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/01/31 10:18:35 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ char	*ft_strbrk(char *brk, int i, char *save, char *over)
 		if(brk[i] == '\n')
 		{
 			ft_memcpy(save, brk, i + 1);
-			ft_memset(over, 0, BUFFER_SIZE + 1);
 			ft_memcpy(over, brk + (i + 1), BUFFER_SIZE - (i));
 			return(save);
 		}
@@ -44,6 +43,7 @@ char	*ft_strbrk(char *brk, int i, char *save, char *over)
 		}
 		i++;
 	}
+	return (save);
 }
 
 char	*ft_switch(char *buf, int i, char *save, char *over)
