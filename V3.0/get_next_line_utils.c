@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 11:15:25 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/01/31 10:50:37 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/01/31 16:26:06 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,16 @@ void	ft_bzero(void *s, size_t n)
 
 void	*ft_calloc(size_t count, size_t size)
 {
-	void	*a;
+	void	*ptr;
 
-	a = (malloc(count * size));
-	if (!a)
+	ptr = (malloc(count * size));
+	if (!ptr)
 		return (NULL);
-	ft_bzero(a, count * size);
-	return (a);
+	ft_bzero(ptr, count * size);
+	return (ptr);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	unsigned int	lens1;
 	unsigned int	lens2;
@@ -46,16 +46,16 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (NULL);
 	lens1 = ft_strlen(s1);
 	lens2 = ft_strlen(s2);
-	newstr = (char *)malloc(lens1 + lens2 + 1 * (sizeof(char)));
+	newstr = ft_calloc(lens1 + lens2 + 1, (sizeof(char)));
 	if (!newstr)
 		return (NULL);
 	ft_memcpy(newstr, s1, lens1);
 	ft_memcpy(newstr + lens1, s2, lens2);
-	newstr[lens1 + lens2] = '\0';
+	free(s2);
 	return (newstr);
 }
 
-void	*ft_memcpy(void *dst, const void *src, size_t n)
+void	*ft_memcpy(void *dst, void *src, size_t n)
 {
 	int				i;
 	unsigned char	*source;
@@ -74,7 +74,7 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 	return (dest);
 }
 
-size_t	ft_strlen(const char *str)
+size_t	ft_strlen(char *str)
 {
 	size_t	i;
 

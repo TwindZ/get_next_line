@@ -3,8 +3,6 @@
 int main()
 {
 	int 	fd;
-	char	buf[BUFFER_SIZE];
-	int ret;
 
 	fd = open("test.txt", O_RDONLY);
 	if((fd = open("test.txt", O_RDONLY))== -1)
@@ -13,11 +11,11 @@ int main()
 		return (1);
 	}
 	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
+	// printf("%s", get_next_line(fd));
+	// printf("%s", get_next_line(fd));
+	// printf("%s", get_next_line(fd));
+	// printf("%s", get_next_line(fd));
+	// printf("%s", get_next_line(fd));
 	
 	// ret = read(fd, buf, BUFFER_SIZE);
 	// printf("%d", ret);
