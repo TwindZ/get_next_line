@@ -6,13 +6,13 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 11:15:25 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/01/30 14:48:55 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/01/31 10:50:37 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	*ft_memset(void *s, int c, size_t len)
+void	ft_bzero(void *s, size_t n)
 {
 	unsigned int		i;
 	unsigned char		*str;
@@ -20,10 +20,9 @@ void	*ft_memset(void *s, int c, size_t len)
 	str = (unsigned char *)s;
 	i = 0;
 	if (!s)
-		return (NULL);
-	while (i < len)
-		str[i++] = c;
-	return (str);
+		return ;
+	while (i < n)
+		str[i++] = 0;
 }
 
 void	*ft_calloc(size_t count, size_t size)
@@ -33,7 +32,7 @@ void	*ft_calloc(size_t count, size_t size)
 	a = (malloc(count * size));
 	if (!a)
 		return (NULL);
-	ft_memset(a, 0, count * size);
+	ft_bzero(a, count * size);
 	return (a);
 }
 

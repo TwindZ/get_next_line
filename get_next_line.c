@@ -6,26 +6,26 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 11:19:49 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/01/31 10:18:35 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/01/31 11:04:17 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_fread(int fd, char *buf, char *line)
+char	*ft_fread(int fd, char *buf)
 {		
 	int	ret;
 	
-	buf = ft_memset(buf, 0, BUFFER_SIZE + 1);
+	ft_bzero(buf, BUFFER_SIZE + 1);
 	ret = read(fd, buf, BUFFER_SIZE);
-	if(ret == 0)
+	if(ret == 0 || ret == -1)
 		return(NULL);
 	return(buf);
 }
 
 char	*ft_strbrk(char *brk, int i, char *save, char *over)
-{	
-	ft_memset(save, 0, BUFFER_SIZE + 1);	
+{		
+	ft_bzero(save, BUFFER_SIZE + 1);	
 	while(brk[i])
 	{
 		if(brk[i] == '\n')
@@ -38,7 +38,7 @@ char	*ft_strbrk(char *brk, int i, char *save, char *over)
 		{
 
 			ft_memcpy(save, brk, i + 1);
-			ft_memset(over, 0, BUFFER_SIZE + 1);
+			ft_bzero(over, BUFFER_SIZE + 1);
 			return(save);
 		}
 		i++;
@@ -72,9 +72,13 @@ char	*get_next_line(int fd)
 	while(line[ft_strlen(line) - 1] != '\n')
 	{
 		if(over[0] == '\0')
-			buf = ft_fread(fd, buf, line);
+			buf = ft_fread(fd, buf);
 		if(buf == NULL)
+		{	
+			if(line == NULL)
+				return(NULL);	
 			return (line);
+		}
 		line = ft_strjoin(line, ft_switch(buf, 0, save, over));
 	}
 	return(line);

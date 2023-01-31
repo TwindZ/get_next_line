@@ -1,7 +1,7 @@
 NAME = get_next_line
 
-SRC =	get_next_line.c			\
-		get_next_line_utils.c	\
+SRC =	get_next_line_utils.c	\
+		get_next_line.c			\
 
 
 #SRC_BONUS =
@@ -20,15 +20,15 @@ all: $(NAME) $(OBJS)
 $(NAME): $(OBJS)
 	ar -rc $(NAME) $(OBJS)
 
-comp: $(NAME) $(SRC)
-	$(CC) $(CFLAGS) $(SRC) main.c
-	make clean
-	./a.out | cat -e
+# comp: $(NAME) $(SRC)
+# 	$(CC) $(CFLAGS) $(SRC) main.c
+# 	make clean
+# 	./a.out | cat -e
 
-debug:  $(NAME) $(SRC)
-	$(CC) -g $(SRC) main.c
-	make clean
-	lldb a.out
+# debug:  $(NAME) $(SRC)
+# 	$(CC) -g $(SRC) main.c
+# 	make clean
+# 	lldb a.out
 	
 clean:
 	rm -f $(OBJS)
