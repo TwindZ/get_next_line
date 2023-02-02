@@ -3,9 +3,8 @@ NAME = get_next_line
 SRC =	get_next_line_utils.c	\
 		get_next_line.c			\
 
-
 #SRC_BONUS =
-			
+		
 
 OBJS = $(SRC:%.c=%.o)
 

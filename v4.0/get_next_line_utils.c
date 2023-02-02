@@ -6,7 +6,7 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 11:15:25 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/02/01 16:29:58 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/02/02 14:39:52 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,34 +27,30 @@ void	ft_bzero(void *s, size_t n)
 
 void	*ft_calloc(size_t count, size_t size)
 {
-	void	*a;
+	void	*ptr;
 
-	a = (malloc(count * size));
-	if (!a)
+	ptr = (malloc(count * size));
+	if (!ptr)
 		return (NULL);
-	ft_bzero(a, count * size);
-	return (a);
+	ft_bzero(ptr, count * size);
+	return (ptr);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char *stack, char *buf)
 {
 	unsigned int	lens1;
 	unsigned int	lens2;
-	char			*newstr;
+	char			*newstack;
 
-	if (!s1 || !s2)
+	lens1 = ft_strlen(stack);
+	lens2 = ft_strlen(buf);
+	newstack = ft_calloc(lens1 + lens2 + 1, (sizeof(char)));
+	if (!newstack)
 		return (NULL);
-	lens1 = ft_strlen(s1);
-	lens2 = ft_strlen(s2);
-	newstr = (char *)malloc(lens1 + lens2 + 1 * (sizeof(char)));
-	if (!newstr)
-		return (NULL);
-	ft_memcpy(newstr, s1, lens1);
-	ft_memcpy(newstr + lens1, s2, lens2);
-	newstr[lens1 + lens2] = '\0';
-	free(s1);
-	free(s2);
-	return (newstr);
+	ft_memcpy(newstack, stack, lens1);
+	ft_memcpy(newstack + lens1, buf, lens2);
+	free(stack);
+	return (newstack);
 }
 
 void	*ft_memcpy(void *dst, void *src, size_t n)
