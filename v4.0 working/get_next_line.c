@@ -6,102 +6,99 @@
 /*   By: emlamoth <emlamoth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 11:19:49 by emlamoth          #+#    #+#             */
-/*   Updated: 2023/02/02 14:30:38 by emlamoth         ###   ########.fr       */
+/*   Updated: 2023/02/06 11:29:33 by emlamoth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_strchr(const char *s, int c)
-{
-	int	i;
-
-	i = 0;
-	if (!s)
-		return (NULL);
-	while (s[i])
-	{
-		if (s[i] == (char)c)
-			return ((char *)s + i);
-		i++;
-	}
-	if (s[i] == (char)c)
-		return ((char *)s + i);
-	return (NULL);
-}
-
 char	*ft_stack(int fd, char *stack)
 {
-	int		ret;
 	char	*buf;
-	
+	int		ret;
+
+	buf = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!buf)
+		return (NULL);
 	ret = 1;
-	while(ret > 0 && ft_strchr(stack, '\n') == NULL)
+	while (ret != 0 && ft_strchr(stack, '\n') == NULL)
 	{
-		buf = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
-		if (!buf)
-			return (NULL);
 		ret = read(fd, buf, BUFFER_SIZE);
-		if(ret == -1)
+		if (ret == -1)
 		{
 			free(buf);
+			free(stack);
 			return (NULL);
 		}
+		buf[ret] = '\0';
 		stack = ft_strjoin(stack, buf);
-		free(buf);
 	}
-	return(stack);
+	free(buf);
+	return (stack);
 }
 
 char	*ft_over(char *stack)
 {
-	char	*over;
-	int		stacklen;
 	int		i;
+	int		j;
+	char	*line;
 
 	i = 0;
-	stacklen = ft_strlen(stack);
-	while(stack[i] && stack[i] != '\n')
+	j = 0;
+	while (stack[i] && stack[i] != '\n')
 		i++;
-	over = calloc((stacklen - i) + 2, sizeof(char));
-	if(!over)
+	if (!stack[i])
+	{
+		free(stack);
 		return (NULL);
-	over = ft_memcpy(over, stack + i + 1, stacklen - i);//+2?
+	}
+	line = (char *)malloc((sizeof(char) * ft_strlen(stack) - i) + 1);
+	if (!line)
+		return (NULL);
+	i++;
+	while (stack[i])
+		line[j++] = stack[i++];
+	line[j] = '\0';
 	free(stack);
-	return(over);
+	return (line);
 }
 
 char	*ft_line(char *stack)
 {
-	char 	*line;
-	int		stacklen;
+	char	*line;
 	int		i;
 
 	i = 0;
-	stacklen = ft_strlen(stack);
-	while(stack[i] && stack[i] != '\n')
-		i++;
-	line = calloc((stacklen - (stacklen - i)) + 2, sizeof(char)); //+2?
-	if(!line)
+	if (!stack[i])
 		return (NULL);
-	line = ft_memcpy(line, stack, i + 1);//+2
-	return(line);
-	
+	while (stack[i] && stack[i] != '\n')
+		i++;
+	line = malloc((i + 2) * sizeof(char));
+	if (!line)
+		return (NULL);
+	i = 0;
+	while (stack[i] && stack[i] != '\n')
+	{
+		line[i] = stack[i];
+		i++;
+	}
+	if (stack[i] && stack[i] == '\n')
+		line[i++] = '\n';
+	line[i] = '\0';
+	return (line);
 }
+
 char	*get_next_line(int fd)
 {
 	char		*line;
-	char static *stack;
-	if(fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
-	if(read(fd, NULL, BUFFER_SIZE) == 0)
+	char static	*stack;
+
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	stack = ft_stack(fd, stack);
-	if(!stack)
+	if (!stack)
 		return (NULL);
 	line = ft_line(stack);
 	stack = ft_over(stack);
-	if(!line)
-		return(NULL);
 	return (line);
 }
